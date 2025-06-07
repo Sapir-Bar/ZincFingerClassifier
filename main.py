@@ -1,4 +1,5 @@
 import os
+import subprocess
 import numpy as np
 import pandas as pd
 import json
@@ -7,6 +8,11 @@ from experiments.run_fold import run_fold
 import state
 
 def main():
+
+    # Generate pairs of fearute matrix and metadata for each ZF
+    processed_dir = "data/ProcessedZFs"
+    if not os.path.exists(processed_dir) or len(os.listdir(processed_dir)) == 0:
+        subprocess.run(["python", "preprocess/generate_processed_zfs.py"], check=True)
 
     state.df = pd.read_csv("data/zf_data_df.csv", delim_whitespace=True)
     state.df["pred_label_value"] = None
