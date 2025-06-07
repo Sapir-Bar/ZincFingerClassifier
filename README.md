@@ -33,8 +33,10 @@ python main.py
 ```
 
 ## Output
-The predictions are saved under the results/ directory:
+The predictions are saved under the `results/` directory:
 
 - `results/zf_pred_df.csv`: contains predictions for each zinc finger in the C-RC dataset, including:
-    - pred_label_value: predicted probability from the sigmoid function
-    - pred_label: binary classification (1.0 if predicted as binding, 0.0 otherwise)
+
+    - `pred_label_value`: predicted probability from the sigmoid function.
+
+    - `pred_label`: binary classification using a threshold of 0.5 (`1.0` if predicted as binding, `0.0` otherwise)
