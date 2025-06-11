@@ -4,3 +4,4 @@ data/ProcessedZFs/
 __pycache__/
 ESM-DBP/
 wandb/
+results/*.json
