@@ -3,3 +3,4 @@ data/feature_matrices/
 data/ProcessedZFs/
 __pycache__/
 ESM-DBP/
+wandb/

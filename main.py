@@ -6,6 +6,7 @@ import json
 from dataset.folds import load_metadata, split_folds
 from experiments.run_fold import run_fold
 import state
+from evaluate import plot_evaluation_results
 
 def main():
 
@@ -23,11 +24,15 @@ def main():
     feature_dir = "data/ProcessedZFs"
 
     all_histories = []
+    val_aucs = []
+    val_mccs = []
 
     for fold_idx, (train_items, val_items) in enumerate(folds):
         print(f"\n--- Running Fold {fold_idx+1}/10 ---")
-        history = run_fold(train_items, val_items, feature_dir, epochs=20, batch_size=32)
+        history = run_fold(train_items, val_items, feature_dir, epochs=20, batch_size=32, fold_idx=fold_idx+1)
         all_histories.append(history)
+        val_aucs.append(history["val_auc"][-1])
+        val_mccs.append(history["val_mcc"][-1])
 
         # Optional: Save intermediate results
         with open(f"results/fold_{fold_idx+1}_history.json", "w") as f:
@@ -39,6 +44,7 @@ def main():
 
     # Save the final state DataFrame
     state.df.to_csv("results/zf_pred_df.csv", index=False)
+    plot_evaluation_results(val_aucs, val_mccs)
 
 if __name__ == "__main__":
     os.makedirs("results", exist_ok=True)
